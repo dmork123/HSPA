@@ -1,36 +1,47 @@
 [
   {
     "Id": 1,
+    "SellRent": 2,
     "Type": "House",
     "Name" : "David",
-    "Price": 12000
+    "Price": 12000,
+    "Image": "prop-1"
   },
   {
     "Id": 2,
+    "SellRent": 2,
     "Type": "Erouse Villa",
     "Name" : "Tony",
-    "Price": 14000
+    "Price": 14000,
+    "Image": "prop-2"
   },
   {
     "Id": 3,
+    "SellRent": 2,
     "Type": "Appartment ",
     "Name" : "Davo",
-    "Price": 15000
+    "Price": 15000,
+    "Image": "prop-3"
   },
   {
     "Id": 4,
+    "SellRent": 2,
     "Type": "Macro House",
     "Name" : "Baza",
-    "Price": 16000
+    "Price": 16000,
+    "Image": "prop-4"
   },
   {
     "Id": 5,
+    "SellRent": 1,
     "Type": "Macro appartment",
     "Name" : "House",
-    "Price": 18000
+    "Price": 18000,
+    "Image": "prop-5"
   },
   {
     "Id": 6,
+    "SellRent": 1,
     "Type": "Macro House",
     "Name" : "Baza",
     "Price": 22000
