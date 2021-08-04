@@ -11,6 +11,7 @@ export class AddPropertyComponent implements OnInit {
   constructor(private router: Router ) { }
 
   ngOnInit() {
+      
   }
 
   onBack() {

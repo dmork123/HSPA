@@ -7,9 +7,11 @@
 
       <div class="form-group col-12">
         <label for="name">Name</label>
-        <input type="text" class="form-control" #propName="ngModel" ngModel name="Name" required>
+        <input type="text" class="form-control" #propName="ngModel" ngModel
+        name="Name" required minlength="5">
         <span *ngIf="!propName.valid && propName.touched" class="error-block">
-          Please provide name
+          <span *ngIf="propName.errors?.required"> Please provide name </span>
+          <span *ngIf="propName.errors?.minlength"> Name must be at leas 5 char long </span>
         </span>
       </div>
 
