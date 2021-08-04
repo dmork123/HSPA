@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, ValidationErrors, Validators } from '@angular/forms';
+import { User } from 'src/app/model/user';
+import { UserServiceService } from 'src/app/services/user-service.service';
 
 @Component({
   selector: 'app-user-register',
@@ -9,8 +11,9 @@ import { AbstractControl, FormBuilder, FormControl, FormGroup, ValidationErrors,
 export class UserRegisterComponent implements OnInit {
 
   registrationForm!: FormGroup;
-  constructor(private fb: FormBuilder) { }
-  user: any = {};
+  constructor(private fb: FormBuilder, private userService: UserServiceService) { }
+  user!: User;
+  userSubmitted!: boolean;
 
   ngOnInit() {
     // this.registrationForm = new FormGroup(
@@ -58,22 +61,25 @@ export class UserRegisterComponent implements OnInit {
     return this.registrationForm.get('mobile') as FormControl;
   }
 
+  userData(): User {
+    return this.user = {
+      userName: this.userName.value,
+      email: this.email.value,
+      password: this.password.value,
+      mobile: this.mobile.value
+    }
+  }
   onSubmit() {
      console.log(this.registrationForm);
-     this.user = Object.assign(this.user, this.registrationForm.value);
-     this.addUser(this.user);
-     this.registrationForm.reset();
-  }
+     this.userSubmitted = true;
 
-  addUser(user: any) {
-    let users = [];
-    if(localStorage.getItem('Users')) {
-      users = JSON.parse(localStorage.getItem('Users') as string);
-      users = [user, ...users];
-    } else {
-      users = [user];
-    }
-    localStorage.setItem('Users', JSON.stringify(users));
+     if(this.registrationForm.valid) {
+      // this.user = Object.assign(this.user, this.registrationForm.value);
+
+      this.userService.addUser(this.userData());
+      this.registrationForm.reset();
+      this.userSubmitted = false;
+     }
   }
 
 }
