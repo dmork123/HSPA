@@ -17,6 +17,9 @@
     "target": "es2017",
     "module": "es2020",
     "suppressImplicitAnyIndexErrors": true,
+    "typeRoots": [
+      "src/typings"
+    ],
     "lib": [
       "es2018",
       "dom"
