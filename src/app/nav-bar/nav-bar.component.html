@@ -18,18 +18,43 @@
       </ul>
      <div >
        <ul class="nav navbar-bav ">
-         <li class="nav-item">
-           <a class="nav-link"
-           routerLink="user/register"
-           routerLinkActive="active">Register</a>
-         </li>
-         <li class="nav-item">
-          <a class="nav-link"
-          routerLink="user/login"
-          routerLinkActive="active">Login</a>
-        </li>
-       </ul>
-     </div>
+          <li *ngIf= "!loggedin()" class="nav-item">
+            <a class="nav-link"
+            routerLink="user/register"
+            routerLinkActive="active">Register</a>
+          </li>
+
+          <li class="nav-item">
+            <a *ngIf= "!loggedin()" class="nav-link"
+            routerLink="user/login"
+            routerLinkActive="active">Login</a>
+          </li>
+
+          <!-- <li *ngIf= "loggedin()" class="nav-item">
+            <a class="nav-link" (click)="onlogout()"
+            routerLinkActive="active">Logout</a>
+          </li> -->
+
+          <div *ngIf="loggedin()" class="btn-group"  dropdown>
+            <a href="#" class="dropdown-toggle text-light" dropdownToggle (click)="false">
+            Welcome {{this.loggedinUser}}
+            </a>
+            <div class="dropdown-menu" *dropdownMenu>
+              <a href="#" class="dropdown-item">
+                <i class="fas fa-tachometer-alt"></i>View Dashboard</a>
+              <a href="#" class="dropdown-item">
+                <i class="far fa-user-cirle"></i> My Profile
+              </a>
+              <a href="#" class="dropdown-item">
+                <i class="fas fa-key"></i> Change Password
+              </a>
+              <a (click)='onlogout()' class="dropdown-item">
+                <i class="fas fa-sign-out-alt"></i> Logout
+              </a>
+            </div>
+          </div>
+        </ul>
+    </div>
     </div>
   </div>
 </nav>
