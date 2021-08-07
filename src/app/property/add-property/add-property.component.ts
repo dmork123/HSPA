@@ -38,7 +38,8 @@ export class AddPropertyComponent implements OnInit {
     this.router.navigate(['/']);
   }
   onSubmit() {
-    console.log("button pressed");
+    console.log("Congrats form submitted");
+    console.log('SellRent=' + this.addPropertyForm?.value.BasicInfo.SellRent);
     console.log(this.addPropertyForm);
   }
 
