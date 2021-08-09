@@ -27,24 +27,31 @@
                 <p>BHK</p>
                 <div class="btn-group" btnRadioGroup
                 [(ngModel)] = "propertyView.BHK" name="BHK"
-                [ngModelOptions]="{standalone: true}">
+                formControlName="BHK">
                   <label
                   *ngFor="let bhk of [1,2,3,4]"
                   class="btn btn-outline-primary m-2"
                   [btnRadio] = bhk.toString() tabindex="0" role="button" name="BHK">{{bhk}}</label>
-
                 </div>
+                <div class="error-block"
+                  *ngIf="BHK.invalid && (nextClicked || BHK.touched)">
+                    Please select BHK
+                </div>
+
               </div>
 
               <div class="form-group col-12">
                 <p>Property Type</p>
                 <div class="btn-group" btnRadioGroup formControlName="PType"
-                [(ngModel)] = "propertyView.PType"
-                >
+                [(ngModel)] = "propertyView.PType">
                   <label
                   *ngFor="let ptype of propertyType"
                   class="btn btn-outline-primary m-2"
                   [btnRadio] = ptype tabindex="0" role="button" name="BHK">{{ptype}}</label>
+                </div>
+                <div class="error-block"
+                  *ngIf="PType.invalid && (nextClicked || PType.touched)">
+                    Please select Property Type
                 </div>
               </div>
 
@@ -52,13 +59,16 @@
                 <p>Furnishing Type</p>
                 <div class="btn-group" btnRadioGroup
                 [(ngModel)]="propertyView.FType" name="FType"
-                [ngModelOptions]="{standalone: true}"
-                >
+                formControlName="FType">
                   <label
                   *ngFor="let ftype of FurnishType"
                   class="btn btn-outline-primary m-2"
-                  [btnRadio] = ftype tabindex="0" role="button" name="ftype">{{ftype}}</label>
+                  [btnRadio] = ftype tabindex="0" role="button" name="FType">{{ftype}}</label>
 
+                </div>
+                <div class="error-block"
+                  *ngIf="FType.invalid && (nextClicked || FType.touched)">
+                    Please select Furninshing Type
                 </div>
               </div>
 
@@ -69,15 +79,23 @@
                 formControlName="Name"
                 minlength="5"
                 [(ngModel)]="propertyView.Name" name="name">
-
+                <div class="error-block"
+                *ngIf="Name.invalid && (nextClicked || Name.touched)">
+                  Please Write a Building/Society/project Name
+                </div>
               </div>
 
                 <div class="form-group col-12">
                   <label >City</label>
                   <input type="text" class="form-control"
                   [(ngModel)] = "propertyView.City"
-                  [ngModelOptions]="{standalone: true}"
+                  formControlName="City"
                   name="city">
+                  <div class="error-block"
+                  *ngIf="City.invalid && (nextClicked || City.touched)">
+
+                    Please write a city
+                  </div>
                 </div>
 
                 <div class="form-group col-12">
@@ -89,21 +107,29 @@
               </tab>
               <tab heading="Pricing and Area" formGroupName="PriceInfo">
                 <div class="form-group col-12">
-                  <label>Price (in AUD)</label>
+                  <label *ngIf="SellRent.value==1">Price (in AUD)</label>
+                  <label *ngIf="SellRent.value==2">Rent (in AUD)</label>
                   <input type="text"
                   class="form-control"
-                  name="Price"
                   formControlName="Price"
-                  [(ngModel)]="propertyView.Price"
-                  >
+                  [(ngModel)]="propertyView.Price">
+
+                  <div class="error-block"
+                  *ngIf="Price.invalid && (nextClicked || Price.touched)">
+                    Please select
+                    <span *ngIf="SellRent.value == 1; else ShowRent">price</span>
+                    <ng-template #ShowRent>rent</ng-template>
+                  </div>
                 </div>
 
-                <div class="form-group col-12">
+                <div class="form-group col-12"
+                *ngIf="SellRent.value == 2">
                   <label>Security (in AUD)</label>
                   <input type="text" class="form-control">
                 </div>
 
-                <div class="form-group col-12">
+                <div class="form-group col-12"
+                *ngIf="SellRent.value == 2">
                   <label>Maintenance (in AUD)</label>
                   <input type="text" class="form-control">
                 </div>
@@ -123,7 +149,7 @@
 
                 <div class="form-group col-12 mb-2">
                   <button type="button" class="btn btn-primary col-12 btn-block "
-                  (click)="selectTab(2, true)">Next</button>
+                  (click)="selectTab(2, PriceInfo.valid)">Next</button>
                 </div>
                 <div>
                   <button type="button" class="btn btn-primary col-12"
@@ -131,20 +157,25 @@
                 </div>
               </tab>
 
-              <tab heading="Address">
+              <tab heading="Address" formGroupName="AddressInfo">
                 <div class="form-group col-12">
                   <label>Floor</label>
-                  <input type="text" class="form-control">
+                  <input type="text" class="form-control" formControlName="FloorNo">
                 </div>
 
                 <div class="form-group col-12">
                   <label>Total Floor</label>
-                  <input type="text" class="form-control">
+                  <input type="text" class="form-control" formControlName="TotalFloor">
                 </div>
 
                 <div class="form-group col-12">
                   <label>Address</label>
-                  <input type="text" class="form-control">
+                  <input type="text" class="form-control"
+                  formControlName="Address">
+                  <div class="error-block"
+                  *ngIf="Address.invalid && (nextClicked || Address.touched)">
+                    Please enter your address
+                  </div>
                 </div>
 
                 <div class="form-group col-12">
@@ -157,24 +188,26 @@
                 <button type="button" class="btn btn-primary col-12"
                   (click)="selectTab(1, true)">Back</button>
               </tab>
-              <tab heading="Other Details">
+              <tab heading="Other Details" formGroupName="OtherInfo">
                 <div class="form-group col-12">
                   <p>Ready to move </p>
-                  <div class="btn-group" btnRadioGroup>
-                    <label class="btn btn-outline-primary m-2"
-                    btnRadio=1 role="button" name="SellRent">Sell</label>
+                  <div class="btn-group" btnRadioGroup formControlName="RTM">
+                    <label class="btn btn-outline-primary m-2" name="RTM"
+                    btnRadio=1 role="button">Yes</label>
 
                     <label class="btn btn-outline-primary m-2"
-                    btnRadio=2 role="button" name="SellRent">Rent</label>
+                    btnRadio=2 role="button" name="RTM">No</label>
                   </div>
 
                 </div>
-                <div class="form-group col-3">
-                  <label>Possession/Available</label>
+                <div *ngIf="RTM.value==2"
+                 class="form-group col-3" >
+                  <label >Possession/Available</label>
                   <input type="date" class="form-control">
                 </div>
 
-                <div class="form-group col-12">
+                <div *ngIf="RTM.value==1"
+                  class="form-group col-12">
                   <label>Age of Property</label>
                   <input type="text" class="form-control">
                 </div>
